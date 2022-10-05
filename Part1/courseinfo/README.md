@@ -1,6 +1,6 @@
 # Getting Started with Create React App
 
-im currently on part 1b javascript ~ lesson 1.6
+im currently on part 1C javascript ~ lesson 1.6
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
