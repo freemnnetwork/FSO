@@ -2,7 +2,7 @@
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-currently doing part 1B exersise 1.6
+finished part 1 but now im doing the extra credit for it which are the lessons with the asteriks = *1.11 - *1.14
 
 ## Available Scripts
 
