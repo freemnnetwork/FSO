@@ -2,10 +2,10 @@ import { useState } from 'react'
 
 const StatisticLine = (props) => {
   return(
-    <>
-        <h1>{props.headline}</h1>
-        <p>{props.stat} {props.text}</p>
-    </>
+        <tr>
+          <td>{props.text}</td>
+          <td>{props.stat}</td>
+        </tr>
   )
 }
 
@@ -13,13 +13,18 @@ const Statistics = (props) => {
   if (props.all >= 1){
     return(
       <>
-        <StatisticLine headline="Statistics"></StatisticLine>
-        <StatisticLine stat={props.good} text="good"></StatisticLine>
-        <StatisticLine stat={props.neutral} text="neutral"></StatisticLine>
-        <StatisticLine stat={props.bad} text="bad"></StatisticLine>
-        <StatisticLine stat={props.all} text="all"></StatisticLine>
-        <StatisticLine stat={(props.good - props.bad) / props.all} text="average"></StatisticLine>
-        <StatisticLine stat={(props.good / props.all) * 100} text="positive"></StatisticLine>
+      <h1>Statistics</h1>
+        <table>
+          <tbody>
+          <StatisticLine headline="Statistics"></StatisticLine>
+          <StatisticLine stat={props.good} text="good"></StatisticLine>
+          <StatisticLine stat={props.neutral} text="neutral"></StatisticLine>
+          <StatisticLine stat={props.bad} text="bad"></StatisticLine>
+          <StatisticLine stat={props.all} text="all"></StatisticLine>
+          <StatisticLine stat={(props.good - props.bad) / props.all} text="average"></StatisticLine>
+          <StatisticLine stat={(props.good / props.all) * 100} text="positive"></StatisticLine>
+          </tbody>
+        </table>
       </>
     )
   }
