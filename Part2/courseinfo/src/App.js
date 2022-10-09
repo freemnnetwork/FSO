@@ -1,4 +1,4 @@
-const Parts = () => {
+const Parts = ({parts}) => {
   return(
     <>
       <p>{parts[0].name} {parts[0].exercises}</p>
@@ -9,13 +9,15 @@ const Parts = () => {
 }
 
 
-const Content = () => {
+const Content = ({parts}) => {
   return(
-    <Parts/>
+    <Parts parts={parts}/>
   )
 }
 
-const Course = () => {
+const Header = () => <h1>{heading}</h1>
+
+const Course = (course) => {
   return(
     <>
       <Header heading={course.name}/>
