@@ -1,35 +1,10 @@
-const Parts = ({parts}) => {
-  return(
-    <>
-      <p>{parts[0].name} {parts[0].exercises}</p>
-      <p>{parts[1].name} {parts[1].exercises}</p>
-      <p>{parts[2].name} {parts[2].exercises}</p>
-    </>
-  )
-}
-
-
-const Content = ({parts}) => {
-  return(
-    <Parts parts={parts}/>
-  )
-}
-
-const Header = () => <h1>{heading}</h1>
-
-const Course = (course) => {
-  return(
-    <>
-      <Header heading={course.name}/>
-      <Content parts={course.parts}/>
-    </>
-  )
-}
+import Course from "./components/Course"
 
 const App = () => {
-    const course = {
-      id: 1,
+  const courses = [
+    {
       name: 'Half Stack application development',
+      id: 1,
       parts: [
         {
           name: 'Fundamentals of React',
@@ -45,11 +20,36 @@ const App = () => {
           name: 'State of a component',
           exercises: 14,
           id: 3
+        },
+        {
+          name: 'Redux',
+          exercises: 11,
+          id: 4
+        }
+      ]
+    }, 
+    {
+      name: 'Node.js',
+      id: 2,
+      parts: [
+        {
+          name: 'Routing',
+          exercises: 3,
+          id: 1
+        },
+        {
+          name: 'Middlewares',
+          exercises: 7,
+          id: 2
         }
       ]
     }
-  
-    return <Course course={course} />
-  }
-  
-  export default App
+  ]
+  return (
+    <div>
+      <Course course={courses}/>
+    </div>
+  )
+}
+
+export default App
