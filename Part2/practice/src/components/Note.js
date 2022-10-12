@@ -1,8 +1,6 @@
-import React from 'react'
-
-const Note = ({ content }) => {
+const Note = ({ note }) => {
   return (
-    <p>{content}</p>
+    <li>{note.content}</li>
   )
 }
 
