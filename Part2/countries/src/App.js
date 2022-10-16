@@ -16,11 +16,6 @@ const App = () => {
         setQuery(event.target.value)
     }
 
-    const buttonHanlder = () => {
-       setShow(!show)
-
-    }
-
     const filtered = countries.filter(item => item.name.common.toLowerCase().includes(query)).map(item => <p key={item.name.common} >{item.name.common}</p>)
     
 
