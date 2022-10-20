@@ -1,14 +1,3 @@
 {
-  "persons": [
-    {
-      "name": "Freeman Chambers",
-      "number": "909-578-9771",
-      "id": 2
-    },
-    {
-      "name": "Trey Chambers",
-      "number": "909-684-8366",
-      "id": 3
-    }
-  ]
+  "persons": []
 }

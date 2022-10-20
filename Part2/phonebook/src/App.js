@@ -2,7 +2,6 @@ import { useState, useEffect } from "react";
 import Filter from "./components/filter";
 import PersonForm from './components/personForm'
 import Persons from './components/persons'
-import axios from 'axios'
 import serv from "./services/Serv";
 
 function App() {
@@ -11,6 +10,9 @@ function App() {
   const [newName, setNewName] = useState('')
   const [newNumber, setNewNumber] = useState('')
   const [query, setQuery] = useState('')
+  const [added, setAdded] = useState(null)
+  const [err, setErr] = useState(null)
+
 
 
   useEffect(() => {
@@ -42,7 +44,29 @@ function App() {
     .then( () => setPersons(persons.filter(item => item.id !== id)))
   }
 
+  const Added = ({ message }) => {
+    if (message === null) {
+      return null
+    }
   
+    return (
+      <div className='added'>
+        {message}
+      </div>
+    )
+  }
+  
+  const Removed = ({ message }) => {
+    if (message === null) {
+      return null
+    }
+  
+    return (
+      <div className='error'>
+        {message}
+      </div>
+    )
+  }
 
 
   const addPersons = (event) => {
@@ -59,6 +83,17 @@ function App() {
       .update(value.id, updatedNumber)
       .then(response => {
         setPersons(persons.map(item => item.name !== value.name ? item : response ))
+        setAdded(`Changed the number of ${value.name}`)
+        setNewName('')
+        setNewNumber('')
+        setTimeout(() => {
+          setAdded(null)
+        },5000)
+      }).catch(() => {
+        setErr(`Information of ${value.name} has already been removed from server`)
+        setTimeout(() => {
+          setErr(null)
+        },5000)
       })
       
     } else {
@@ -73,6 +108,10 @@ function App() {
         setPersons(persons.concat(createdNote))
         setNewName('')
         setNewNumber('')
+        setAdded(`Added ${createdNote.name}`)
+        setTimeout(() => {
+          setAdded(null)
+        },5000)
       })
     }  
   }
@@ -80,6 +119,8 @@ function App() {
   return (
     <div className="App">
       <h2>Phonebook</h2>
+      <Removed message={err}/>
+      <Added message={added}/>
       <Filter query={query} queryHanlder={queryHanlder} />
       <h2>add a new</h2>
       <PersonForm addPersons={addPersons} newName={newName} nameHandler={nameHandler} newNumber={newNumber} numberHandler={numberHandler}/>
@@ -90,5 +131,3 @@ function App() {
 }
 
 export default App;
-
-
