@@ -1,10 +1,10 @@
 const express = require('express')
 const app = express()
 
-app.use(express.json)
+app.use(express.json())
 
 
-const numbers = [
+const persons = [
     { 
       "id": 1,
       "name": "Arto Hellas", 
@@ -27,80 +27,91 @@ const numbers = [
     }
 ]
 
+
 // GET
 
 app.get('/api/persons', (request, response) => {
-    response.json(numbers)
+    response.json(persons)
 })
 
-app.get('/info', (request, response) => {
 
-    const info = {
-        content:`Phonebook has info for ${numbers.length} people`,
-        date: new Date()
-    }
-    response.json(info)
+app.get('/info', (request, response) => {
+    let phoneNum = `Phonebook has info for ${persons.length} people`
+    let dates = new Date()
+    response.send(`<div><p>${phoneNum}</p><p>${dates}</p></div>`)
+
 })
 
 app.get('/api/persons/:id', (request, response) => {
     const id = Number(request.params.id)
-    const item = numbers.find(thing => thing.id === id)
-    
-    if (numbers.length === id){
-        response.json(item)
-    }
+    const items = persons.find(item => item.id === id)
 
-    response.status(204).json({
-        error: `page ${id} is not found`
-    })
+    response.json(items)
 })
 
 // GET end
 
 // DELETE
 
-app.get('/api/persons/:id', (request, response) => {
+app.delete('/api/persons/:id', (request, response) => {
     const id = Number(request.params.id)
-    const item = numbers.filter(thing => thing.id !== id)
+    const items = persons.filter(item => item.id !== id)
 
-    response.json.status(204).json(item)
+    response.status(404).end()
 })
 
 // DELETE end
 
-// POST 
+// POST
 
-app.post('api/persons', (request, response) => {
-    body = request.body
 
-    if(body.content === numbers.map(item => item.content)){
-        response.status(204).json({
-            error:"name must be unique"
+
+const generateId = () => {
+    const num = Math.random() * 1000000
+    console.log(num)
+    return num
+}
+
+
+app.post('/api/persons', (request, response) => {
+
+   const body = request.body
+
+    if (!body.name) {
+         return response.status(202).json({
+            error: 'your missing a name'
         })
-    } else if (body.content === null){
-        response.status(204).json({
-            error:"content is empty"
+    } else if (!body.number) {
+         return response.status(400).json({
+            error: 'your missing a number'
         })
-    } else if (body.number === null){
-        response.status(204).json({
-            error:"number is empty"
+    } else if (persons.map(item => item.name === body.name)) {
+         return response.status(404).json({
+            error: 'name must be unique'
         })
     }
 
-    const newPost = {
-        id: Math.random() * 1000000000,
-        name: body.name,
-        number: body.number
-    }
 
-    numbers = numbers.concat(newPost)
-    response.json(numbers)
+   const note = {
+    id: generateId(),
+    name: body.name,
+    number: body.number
+   }
+
+
+   item = persons.concat(note)
+   console.log(item)
+
+   response.json(item)
+
 })
 
 // POST end
 
-const PORT = 3001
 
+
+
+const PORT = 3001
 app.listen(PORT, () => {
-    console.log(`the server is running on ${PORT}`)
+    console.log(`listening on port ${PORT}`)
 })
