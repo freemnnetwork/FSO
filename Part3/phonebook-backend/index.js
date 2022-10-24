@@ -1,8 +1,14 @@
 const express = require('express')
+const morgan = require('morgan')
 const app = express()
+
+
 
 app.use(express.json())
 
+morgan.token('body', (request, response) => request.method === 'POST' ? JSON.stringify(request.body) : '')
+
+app.use(morgan(':method :url :status :res[content-length] - :response-time ms :body'))
 
 const persons = [
     { 
@@ -68,9 +74,9 @@ app.delete('/api/persons/:id', (request, response) => {
 
 const generateId = () => {
     const num = Math.random() * 1000000
-    console.log(num)
     return num
 }
+
 
 
 app.post('/api/persons', (request, response) => {
@@ -85,7 +91,7 @@ app.post('/api/persons', (request, response) => {
          return response.status(400).json({
             error: 'your missing a number'
         })
-    } else if (persons.map(item => item.name === body.name)) {
+    } else if (persons.find(item => item.name === body.name)) {
          return response.status(404).json({
             error: 'name must be unique'
         })
@@ -100,15 +106,12 @@ app.post('/api/persons', (request, response) => {
 
 
    item = persons.concat(note)
-   console.log(item)
 
    response.json(item)
 
 })
 
 // POST end
-
-
 
 
 const PORT = 3001
